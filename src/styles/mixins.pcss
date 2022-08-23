@@ -1,0 +1,275 @@
+@import "media.pcss";
+@import "animations.pcss";
+
+@define-mixin fluid-text $max: 100, $min: 14 {
+  font-size: calc($(min)px + ($max - $min) * ((100vw - 360px) / (1920 - 360)));
+
+  @media (--desktop-above) {
+    font-size: $(max)px;
+  }
+}
+
+@define-mixin transition $prop: var(--base-transition-duration) {
+  .is-dom-ready & {
+    transition: $prop;
+  }
+}
+
+@define-mixin hide {
+  opacity: 0;
+  visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@define-mixin show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@define-mixin img-block {
+  display: block;
+  max-width: 100%;
+  border: 0;
+}
+
+@define-mixin img-contain $size: 100% {
+  @mixin square $size;
+
+  object-fit: contain;
+}
+
+@define-mixin img-cover $size: 100% {
+  @mixin square $size;
+
+  display: block;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border: 0;
+}
+
+@define-mixin abs-cover {
+  @mixin square;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@define-mixin reset-link {
+  text-decoration: none;
+  color: inherit;
+  border: none;
+}
+
+@define-mixin hide-scrollbar {
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+}
+
+@define-mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: static;
+    margin: 0;
+    padding: 0;
+
+    &::before,
+    &::after {
+      content: none;
+    }
+  }
+}
+
+@define-mixin reset-button {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  appearance: none;
+}
+
+@define-mixin visually-hidden {
+  @mixin square 1px !important;
+
+  position: absolute !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+@define-mixin text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@define-mixin line-clamp $max: 1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $max;
+  overflow: hidden;
+}
+
+@define-mixin scale $scale: 1.025 {
+  transform: scale($scale) translateZ(0);
+}
+
+@define-mixin square $size: 100% {
+  width: $size;
+  height: $size;
+}
+
+@define-mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+@define-mixin flex-center $display: flex {
+  display: $display;
+  justify-content: center;
+  align-items: center;
+}
+
+@define-mixin custom-scrollbar $scrollBackgroundColor: transparent, $thumbColor: var(--c-accent), $thumbBorderRadius: var(--border-radius), $size: var(--scroll-bar-width) {
+  scrollbar-color: $thumbColor $scrollBackgroundColor;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    --size: $size;
+
+    @mixin square var(--size);
+
+    background-color: $scrollBackgroundColor;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumbColor;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb {
+    border-radius: $thumbBorderRadius;
+  }
+}
+
+@define-mixin abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@define-mixin abs-center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@define-mixin abs-center-y {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@define-mixin gradient-border $gradient: var(--gradient), $width: 2px, $offset: 0px {
+  &::before {
+    @mixin square calc(100% + $offset);
+    @mixin abs-center;
+
+    content: "";
+    padding: $width;
+    background: $gradient;
+    -webkit-mask: linear-gradient(var(--c-light) 0 0) content-box, linear-gradient(var(--c-light) 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    border-radius: inherit;
+  }
+}
+
+@define-mixin focus-visible {
+  html.safari &:focus,
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+  }
+}
+
+@define-mixin aspect-radio-square {
+  aspect-ratio: 1 / 1;
+
+  @supports not (aspect-ratio: 1 / 1) {
+    &::before,
+    &::after {
+      content: "";
+    }
+
+    &::before {
+      float: left;
+      padding-top: 100%;
+    }
+
+    &::after {
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+@define-mixin headings {
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    @mixin-content;
+  }
+}
+
+@define-mixin list-items {
+  li,
+  li ol,
+  li ul {
+    &:not([class]) {
+      @mixin-content;
+    }
+  }
+}
+
+@define-mixin text {
+  .text,
+  .p,
+  p:not([class]),
+  .ul,
+  ul:not([class]),
+  .ol,
+  ol:not([class]) {
+    @mixin-content;
+  }
+}
+
+@define-mixin slider-shadow-fix $offset: 30px {
+  &.swiper {
+    width: calc(100% + $(offset) * 2);
+    margin: calc($(offset) * -1);
+    padding: $(offset);
+  }
+}

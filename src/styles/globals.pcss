@@ -1,0 +1,111 @@
+@import "mixins.pcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  height: 100% !important;
+  font: var(--base-font-weight) var(--base-font-size)/var(--base-line-height) var(--base-font-family);
+  text-size-adjust: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: var(--site-min-width);
+  min-height: inherit;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font: inherit;
+  color: var(--c-light);
+  background-color: var(--c-dark);
+  scroll-behavior: smooth;
+}
+
+.app {
+  @mixin grid-center;
+
+  padding-block: 30px;
+}
+
+#root,
+.app {
+  height: inherit;
+  min-height: inherit;
+}
+
+template,
+#svg-sprite {
+  display: none !important;
+}
+
+#svg-sprite {
+  symbol {
+    &,
+    * {
+      fill: currentColor;
+    }
+  }
+}
+
+svg {
+  display: block;
+  fill: currentColor;
+}
+
+a,
+button {
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 100%;
+  color: var(--c-light);
+
+  &:hover {
+    @media (--hoverable) {
+      color: var(--c-accent);
+    }
+  }
+
+  html.safari &:focus,
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: 1px;
+  }
+
+  html.safari &:focus {
+    @media (--mobile) {
+      outline: none;
+    }
+  }
+}
+
+svg,
+svg *,
+a,
+button,
+input,
+textarea,
+label,
+::before,
+::after,
+::placeholder {
+  @mixin transition;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
