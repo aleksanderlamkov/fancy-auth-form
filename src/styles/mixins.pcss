@@ -201,8 +201,7 @@
 @define-mixin focus-visible {
   html.safari &:focus,
   &:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: 2px;
+    @mixin-content;
   }
 }
 

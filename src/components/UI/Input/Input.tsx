@@ -1,45 +1,63 @@
-import React, { ChangeEvent, forwardRef, Ref } from "react"
+import React, { ChangeEvent, FocusEvent, forwardRef, Ref } from "react"
 import classNames from "classnames"
+import Label from "../Label/Label"
+import FormError from "../../FormError/FormError"
 import "./Input.pcss"
 
 export type InputType = {
-  className?: string,
-  id: string,
-  name: string,
+  className?: string
+  id: string
+  name: string
   type?: "text" | "email" | "tel" | "date" | "password" | "url",
-  value: string,
-  placeholder?: string,
-  autoComplete?: string,
-  style?: {},
-  onChange: (event: ChangeEvent<any>) => void,
+  value: string
+  error?: string
+  label?: string
+  placeholder?: string
+  autoComplete?: string
+  style?: {}
+  onChange: (event: ChangeEvent<any>) => void
+  onBlur: (event: FocusEvent<HTMLInputElement>) => void
 }
 
 const Input = (props: InputType, ref: Ref<HTMLInputElement>): JSX.Element => {
   const {
-    className,
+    className = "",
     id,
     name,
     type = "text",
-    value,
-    placeholder,
+    value = "",
+    error = "",
+    label = "",
+    placeholder = "",
     autoComplete = "off",
-    style,
+    style = {},
     onChange,
+    onBlur,
   } = props
 
+  const hasLabel = Boolean(label)
+  const hasError = Boolean(error)
+
   return (
-    <input
-      className={classNames(className, "input")}
-      id={name}
-      name={name}
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      autoComplete={autoComplete}
-      ref={ref}
-      style={style}
-      onChange={onChange}
-    />
+    <>
+      {hasLabel && <Label htmlFor={id}>{label}</Label>}
+      <input
+        className={classNames(className, "input", {
+          "is-invalid": hasError,
+        })}
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        ref={ref}
+        style={style}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
+      {hasError && <FormError>{error}</FormError>}
+    </>
   )
 }
 

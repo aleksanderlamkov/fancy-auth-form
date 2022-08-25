@@ -1,0 +1,133 @@
+@import "../../../styles/mixins.pcss";
+
+.button {
+  --maxWidth: 300px;
+  --height: var(--input-height);
+  --paddingX: 16px;
+  --textColor: var(--c-light);
+  --bgColor: var(--c-dark);
+  --border: var(--borderWidth) var(--borderStyle) var(--borderColor);
+  --borderWidth: 3px;
+  --borderStyle: outset;
+  --borderColor: var(--c-accent);
+  --borderRadius: var(--border-radius);
+  --dropShadow: none;
+
+  --iconSize: 1em;
+  --iconColor: var(--c-light);
+  --iconOffsetX: 0.5em;
+
+  --hoverTextColor: var(--c-light);
+  --hoverBgColor: var(--c-dark);
+  --hoverBorderColor: var(--c-accent);
+  --hoverDropShadow: var(--box-shadow-2);
+  --hoverIconColor: var(--c-light);
+
+  --focusTextColor: var(--c-light);
+  --focusBgColor: var(--c-dark);
+  --focusBorderColor: var(--c-accent-2);
+  --focusDropShadow: 0 0 0 transparent;
+  --focusIconColor: var(--c-light);
+  --focus-outline: none;
+
+  --activeTextColor: var(--c-light);
+  --activeBgColor: var(--c-dark);
+  --activeBorderColor: var(--c-accent-2);
+  --activeDropShadow: 0 0 0 transparent;
+  --activeIconColor: var(--c-light);
+
+  --activeRippleColor: var(--c-accent);
+
+  --rippleAnimation: ripple 0.8s ease-in;
+  --rippleOffsetX: 0;
+  --rippleOffsetY: 0;
+
+  @mixin reset-button;
+  @mixin flex-center inline-flex;
+
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: var(--maxWidth);
+  height: var(--height);
+  padding-inline: var(--paddingX);
+  color: var(--textColor);
+  background-color: var(--bgColor);
+  border: var(--border);
+  border-radius: var(--borderRadius);
+  filter: drop-shadow(var(--dropShadow));
+  will-change: transform;
+  cursor: pointer;
+
+  &::before {
+    --size: 0.5px;
+
+    @mixin square var(--size);
+
+    content: "";
+    position: absolute;
+    left: var(--rippleOffsetX);
+    top: var(--rippleOffsetY);
+    background-color: transparent;
+    border-radius: 50%;
+    transform-origin: 0 0;
+    pointer-events: none;
+
+    .is-ripple:not(.is-animation-end)& {
+      background-color: var(--activeRippleColor);
+      animation: var(--rippleAnimation);
+    }
+  }
+
+  &:hover {
+    @media (--hoverable) {
+      color: var(--hoverTextColor);
+      background-color: var(--hoverBgColor);
+      border-color: var(--hoverBorderColor);
+      filter: drop-shadow(var(--hoverDropShadow));
+
+      .button__icon {
+        --color: var(--hoverIconColor);
+      }
+    }
+  }
+
+  &:focus {
+    color: var(--focusTextColor);
+    background-color: var(--focusBgColor);
+    border-color: var(--focusBorderColor);
+    filter: drop-shadow(var(--focusDropShadow));
+
+    .button__icon {
+      --color: var(--focusIconColor);
+    }
+  }
+
+  &:active {
+    @mixin scale;
+
+    color: var(--activeTextColor);
+    background-color: var(--activeBgColor);
+    border-color: var(--activeBorderColor);
+    filter: drop-shadow(var(--activeDropShadow));
+
+    .button__icon {
+      --color: var(--activeIconColor);
+    }
+  }
+
+  &__body {
+    @mixin flex-center;
+    @mixin square;
+
+    position: relative;
+    z-index: 1;
+    column-gap: var(--iconOffsetX);
+    pointer-events: none;
+  }
+
+  &__icon {
+    --size: var(--iconSize);
+    --color: var(--iconColor);
+  }
+}

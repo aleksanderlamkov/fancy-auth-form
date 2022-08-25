@@ -1,0 +1,11 @@
+@import "../../../styles/mixins.pcss";
+
+.svg-icon {
+  --size: 1em;
+  --color: var(--c-light);
+
+  @mixin flex-center inline-flex;
+  @mixin square var(--size);
+
+  color: var(--color);
+}

@@ -78,10 +78,9 @@ button {
     }
   }
 
-  html.safari &:focus,
-  &:focus-visible {
+  @mixin focus-visible {
     outline: var(--focus-outline);
-    outline-offset: 1px;
+    outline-offset: var(--focus-outline-offset);
   }
 
   html.safari &:focus {

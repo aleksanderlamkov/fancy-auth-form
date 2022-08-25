@@ -1,5 +1,63 @@
 @import "../../../styles/mixins.pcss";
 
 .input {
+  --maxWidth: 300px;
+  --height: var(--input-height);
+  --padding: var(--input-padding);
+  --textColor: var(--c-dark);
+  --placeholderColor: var(--c-gray);
+  --bgColor: var(--c-light);
+  --border: var(--borderWidth) var(--borderStyle) var(--borderColor);
+  --borderWidth: 3px;
+  --borderStyle: outset;
+  --borderColor: var(--c-accent);
+  --borderRadius: var(--border-radius);
+  --dropShadow: 0 0 0 transparent;
 
+  --hoverTextColor: var(--c-dark);
+  --hoverPlaceholderColor: var(--c-gray);
+  --hoverBgColor: var(--c-light);
+  --hoverBorderColor: var(--c-accent);
+  --hoverDropShadow: var(--box-shadow-2);
+
+  --invalidDropShadow: 0 0 4px var(--c-red);
+
+  --focusBorderColor: var(--c-accent-2);
+
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--maxWidth);
+  height: var(--height);
+  padding: var(--padding);
+  color: var(--textColor);
+  background-color: var(--bgColor);
+  border: var(--border);
+  border-radius: var(--borderRadius);
+  filter: drop-shadow(var(--dropShadow));
+
+  &::placeholder {
+    color: var(--placeholderColor);
+  }
+
+  &:hover {
+    @media (--hoverable) {
+      color: var(--hoverTextColor);
+      background-color: var(--hoverBgColor);
+      border-color: var(--hoverBorderColor);
+      filter: drop-shadow(var(--hoverDropShadow));
+
+      &::placeholder {
+        color: var(--hoverPlaceholderColor);
+      }
+    }
+  }
+
+  &:focus {
+    border-color: var(--focusBorderColor);
+  }
+
+  &.is-invalid {
+    filter: drop-shadow(var(--invalidDropShadow));
+  }
 }
