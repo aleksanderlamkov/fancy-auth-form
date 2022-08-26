@@ -1,17 +1,17 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import classNames from "classnames"
 
-export type GridItemType = {
+interface IGridItem {
   className?: string
-  isWide?: boolean
   children: ReactNode
+  isWide?: boolean
 }
 
-const GridItem = (props: GridItemType): JSX.Element => {
+const GridItem: FC<IGridItem> = (props) => {
   const {
     className,
-    isWide = false,
     children,
+    isWide = false,
   } = props
 
   return (

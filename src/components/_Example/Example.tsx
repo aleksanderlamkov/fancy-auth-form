@@ -1,12 +1,12 @@
-import React from "react"
+import React, { FC } from "react"
 import classNames from "classnames"
 import "./Example.pcss"
 
-interface ExampleProps {
+interface IExample {
   className?: string
 }
 
-const Example = (props: ExampleProps): JSX.Element => {
+const Example: FC<IExample> = (props) => {
   const {
     className,
   } = props

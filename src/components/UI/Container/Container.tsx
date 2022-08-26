@@ -1,17 +1,20 @@
-import React from "react"
+import React, { FC, ReactNode } from "react"
+import classNames from "classnames"
 import "./Container.pcss"
 
-interface ContainerProps {
-  children: JSX.Element,
+interface IContainer {
+  className?: string,
+  children: ReactNode,
 }
 
-const Container = (props: ContainerProps): JSX.Element => {
+const Container: FC<IContainer> = (props) => {
   const {
+    className,
     children,
   } = props
 
   return (
-    <div className="container">
+    <div className={classNames(className, "container")}>
       {children}
     </div>
   )

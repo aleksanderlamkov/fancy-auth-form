@@ -1,78 +1,63 @@
 import React from "react"
-import "./AuthForm.pcss"
-import Input from "../../UI/Input/Input"
-import FormItem from "../../UI/FormItem/FormItem"
-import Grid from "../../UI/Grid/Grid"
-import GridItem from "../../UI/Grid/GridItem"
-import Button from "../../UI/Button/Button"
-import { useFormik } from "formik"
-import * as Yup from "yup"
+import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
+import { Link, useNavigate } from "react-router-dom"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { addStatus } from "../../../store/slices/statusesSlice"
+import { useAppDispatch } from "../../../hooks/redux"
+import { FormikHelpers } from "formik/dist/types"
+import { setUser } from "../../../store/slices/userSliсe"
+import UserForm from "../UserForm/UserForm"
+import firebase from "firebase/compat"
+import OAuthCredential = firebase.auth.OAuthCredential
 
-const AuthForm = (): JSX.Element => {
-  const formik = useFormik({
-    onSubmit(values, formikHelpers) {
-      const { setErrors, setFieldError } = formikHelpers
-      console.debug("values:", values)
-      // setErrors({
-      //   authPassword: "Wrong password"
-      // })
-      setFieldError("authPassword", "Wrong password")
-    },
-    validationSchema: Yup.object({
-      authEmail: Yup.string()
-        .required("Required field")
-        .email("Invalid email address"),
-      authPassword: Yup.string()
-        .required("Required field")
-        .min(8, "Your password cannot be less than 8 characters")
-        .max(20, "Your password cannot be longer than 20 characters"),
-    }),
-    initialValues: {
-      authEmail: "",
-      authPassword: "",
-    }
-  })
+const AuthForm = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const onAfterSubmit = (email: EmailType, password: string, formikHelpers: FormikHelpers<any>) => {
+    const auth = getAuth()
+    const { setErrors } = formikHelpers
+
+    signInWithEmailAndPassword(auth, email, password).then((response) => {
+      const { user } = response
+      const { email, uid: id } = user
+      const { accessToken: token = "" } = user as unknown as OAuthCredential
+      dispatch(setUser({ email, token, id }))
+      navigate(AppRoute.index, { replace: true })
+      dispatch(addStatus({ label: "Auth is successful. Welcome!" }))
+    }).catch(({ code }) => {
+      switch (code) {
+        case (AuthStatus.wrongPassword): {
+          const label = "Password is wrong!"
+          dispatch(addStatus({ label }))
+          setErrors({ password: label })
+          break
+        }
+        case (AuthStatus.userNotFound): {
+          const label = `User with email '${email}' is not found!`
+          dispatch(addStatus({ label }))
+          setErrors({ email: label })
+          break
+        }
+        case (AuthStatus.tooManyRequests): {
+          dispatch(addStatus({ label: "Too many attempts. Please, try again a bit later!" }))
+          break
+        }
+        default: {
+          break
+        }
+      }
+    })
+  }
 
   return (
-    <form className="auth-form" onSubmit={formik.handleSubmit}>
-      <Grid>
-        <GridItem>
-          <FormItem>
-            <Input
-              id="authEmail"
-              name="authEmail"
-              type="email"
-              value={formik.values.authEmail}
-              error={formik.touched.authEmail ? formik.errors.authEmail : ""}
-              label="Email"
-              placeholder="example@mail.com"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </FormItem>
-        </GridItem>
-        <GridItem>
-          <FormItem>
-            <Input
-              id="authPassword"
-              name="authPassword"
-              type="password"
-              value={formik.values.authPassword}
-              error={formik.touched.authPassword ? formik.errors.authPassword : ""}
-              label="Password"
-              placeholder="Your password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </FormItem>
-        </GridItem>
-        <GridItem>
-          <Button icon="sign-in" type="submit">
-            Sign In
-          </Button>
-        </GridItem>
-      </Grid>
-    </form>
+    <UserForm
+      onAfterSubmit={onAfterSubmit}
+      submitButtonLabel="Sign In"
+      submitButtonIcon="sign-in"
+      notice={<>Don't have an account yet? <Link to={AppRoute.register}>Sign Up</Link></>}
+      hasPasswordAutoComplete
+    />
   )
 }
 

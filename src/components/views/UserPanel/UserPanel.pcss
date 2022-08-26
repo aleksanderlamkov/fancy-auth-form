@@ -1,0 +1,40 @@
+@import "../../../styles/mixins.pcss";
+
+.user-panel {
+  --imageSize: 36px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &__name {
+    @mixin text-overflow;
+
+    max-width: 220px;
+  }
+
+  &__image-wrapper {
+    @mixin flex-center;
+    @mixin square var(--imageSize);
+
+    flex-shrink: 0;
+    background-color: var(--c-light);
+    border: 3px outset var(--c-accent);
+    border-radius: 50%;
+  }
+
+  &__image {
+    --size: 65%;
+
+    @mixin img-contain var(--size);
+  }
+
+  &__sign-out-button {
+    && {
+      --maxWidth: var(--imageSize);
+      --height: var(--imageSize);
+      --paddingX: 0;
+      --borderWidth: 2px;
+    }
+  }
+}

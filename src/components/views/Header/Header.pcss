@@ -1,0 +1,23 @@
+@import "../../../styles/mixins.pcss";
+
+.header {
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 12px;
+    box-shadow: var(--box-shadow-3);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  &__button {
+    && {
+      --maxWidth: max-content;
+    }
+  }
+}

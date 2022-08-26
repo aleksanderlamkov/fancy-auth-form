@@ -1,18 +1,18 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import classNames from "classnames"
 import "./Label.pcss"
 
-export type LabelType = {
+interface ILabel {
   className?: string
-  htmlFor: string
   children: ReactNode
+  htmlFor?: string
 }
 
-const Label = (props: LabelType): JSX.Element => {
+const Label: FC<ILabel> = (props) => {
   const {
     className,
-    htmlFor,
     children,
+    htmlFor,
   } = props
 
   return (

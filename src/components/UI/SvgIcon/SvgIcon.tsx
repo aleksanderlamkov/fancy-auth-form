@@ -1,13 +1,13 @@
-import React from "react"
+import React, { FC } from "react"
 import classNames from "classnames"
 import "./SvgIcon.pcss"
 
-interface SvgIconProps {
+interface ISvgIcon {
   className?: string
   name: string
 }
 
-const SvgIcon = (props: SvgIconProps) => {
+const SvgIcon: FC<ISvgIcon> = (props) => {
   const {
     className,
     name,

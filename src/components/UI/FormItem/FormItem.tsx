@@ -1,13 +1,13 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import classNames from "classnames"
 import "./FormItem.pcss"
 
-export type FormItemType = {
+interface IFormItem {
   className?: string
   children: ReactNode
 }
 
-const FormItem = (props: FormItemType): JSX.Element => {
+const FormItem: FC<IFormItem> = (props) => {
   const {
     className,
     children,

@@ -1,13 +1,13 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import classNames from "classnames"
 import "./FormError.pcss"
 
-interface ExampleProps {
+interface IFormError {
   className?: string
   children: ReactNode
 }
 
-const FormError = (props: ExampleProps): JSX.Element => {
+const FormError: FC<IFormError> = (props) => {
   const {
     className,
     children,

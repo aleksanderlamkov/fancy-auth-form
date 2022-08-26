@@ -1,25 +1,26 @@
 import React, { ChangeEvent, FocusEvent, forwardRef, Ref } from "react"
 import classNames from "classnames"
 import Label from "../Label/Label"
-import FormError from "../../FormError/FormError"
+import FormError from "../FormError/FormError"
 import "./Input.pcss"
 
-export type InputType = {
+interface IInput {
   className?: string
   id: string
   name: string
-  type?: "text" | "email" | "tel" | "date" | "password" | "url",
+  type?: "text" | "email" | "tel" | "date" | "password" | "url"
   value: string
   error?: string
   label?: string
   placeholder?: string
   autoComplete?: string
+  inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
   style?: {}
   onChange: (event: ChangeEvent<any>) => void
   onBlur: (event: FocusEvent<HTMLInputElement>) => void
 }
 
-const Input = (props: InputType, ref: Ref<HTMLInputElement>): JSX.Element => {
+const Input = (props: IInput, ref: Ref<HTMLInputElement>): JSX.Element => {
   const {
     className = "",
     id,
@@ -30,6 +31,7 @@ const Input = (props: InputType, ref: Ref<HTMLInputElement>): JSX.Element => {
     label = "",
     placeholder = "",
     autoComplete = "off",
+    inputMode = undefined,
     style = {},
     onChange,
     onBlur,
@@ -51,6 +53,7 @@ const Input = (props: InputType, ref: Ref<HTMLInputElement>): JSX.Element => {
         value={value}
         placeholder={placeholder}
         autoComplete={autoComplete}
+        inputMode={inputMode}
         ref={ref}
         style={style}
         onChange={onChange}

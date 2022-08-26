@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import classNames from "classnames"
 import "./Grid.pcss"
 
-export type GridType = {
+interface IGrid {
   className?: string
   columns?: number
   children: ReactNode
 }
 
-const Grid = (props: GridType): JSX.Element => {
+const Grid: FC<IGrid> = (props) => {
   const {
     className,
     columns = 1,

@@ -1,15 +1,18 @@
-import React, { FC, ReactNode, MouseEvent, useMemo, useCallback, useState, AnimationEventHandler } from "react"
+import React, { FC, ReactNode, MouseEvent, useMemo, useCallback, useState } from "react"
 import classNames from "classnames"
 import SvgIcon from "../SvgIcon/SvgIcon"
-import "./Button.pcss"
 import { wait } from "../../../utils/wait"
+import { Link } from "react-router-dom"
+import "./Button.pcss"
 
-export type ButtonClickEvent = MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+type ButtonClickEvent = MouseEvent<HTMLButtonElement | HTMLAnchorElement>
 
-interface ButtonProps {
+interface IButton {
   className?: string
   type?: "button" | "submit" | "reset"
+  href?: string
   title?: string
+  ariaLabel?: string
   icon?: string
   iconPosition?: "before" | "after"
   children?: ReactNode
@@ -21,11 +24,13 @@ interface Coordinates {
   y: number
 }
 
-const Button: FC<ButtonProps> = (props: ButtonProps) => {
+const Button: FC<IButton> = (props) => {
   const {
-    className = "",
+    className,
     type = "button",
+    href = "",
     title,
+    ariaLabel,
     icon,
     iconPosition = "after",
     children,
@@ -35,6 +40,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const [ isAnimationEnd, setIsAnimationEnd ] = useState<boolean>(false)
   const [ isRipple, setIsRipple ] = useState<boolean>(false)
   const [ rippleOffset, setRippleOffset ] = useState<Coordinates>({ x: 0, y: 0 })
+  const isLink = Boolean(href)
 
   const materializeEffect = (coordinates: Coordinates) => {
     setIsAnimationEnd(false)
@@ -52,11 +58,11 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
 
   const bodyMarkup = useMemo(() => {
     return (
-      <>
+      <span className="button__body">
         {(icon && iconPosition === "before") && iconMarkup}
         {children && <span className="button__label">{children}</span>}
         {(icon && iconPosition === "after") && iconMarkup}
-      </>
+      </span>
     )
   }, [ iconMarkup, iconPosition, children ])
 
@@ -78,26 +84,24 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     setIsAnimationEnd(true)
   }
 
-  return (
-    <button
-      className={classNames(className, "button", {
-        "is-ripple": isRipple,
-        "is-animation-end": isAnimationEnd,
-      })}
-      type={type}
-      style={{
-        "--rippleOffsetX": `${rippleOffset.x}px`,
-        "--rippleOffsetY": `${rippleOffset.y}px`,
-      } as React.CSSProperties}
-      title={title}
-      onClick={_onClick}
-      onAnimationEnd={onAnimationEnd}
-    >
-      <span className="button__body">
-        {bodyMarkup}
-      </span>
-    </button>
-  )
+  const args = {
+    className: classNames(className, "button", {
+      "is-ripple": isRipple,
+      "is-animation-end": isAnimationEnd,
+    }),
+    style: {
+      "--rippleOffsetX": `${rippleOffset.x}px`,
+      "--rippleOffsetY": `${rippleOffset.y}px`,
+    } as React.CSSProperties,
+    title,
+    ["aria-label"]: ariaLabel,
+    onClick: _onClick,
+    onAnimationEnd,
+  }
+
+  return isLink ?
+    <Link {...args} to={href}>{bodyMarkup}</Link> :
+    <button {...args} type={type}>{bodyMarkup}</button>
 }
 
 export default Button

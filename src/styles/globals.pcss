@@ -34,16 +34,15 @@ body {
   scroll-behavior: smooth;
 }
 
-.app {
-  @mixin grid-center;
-
-  padding-block: 30px;
-}
-
 #root,
 .app {
   height: inherit;
   min-height: inherit;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
 }
 
 template,

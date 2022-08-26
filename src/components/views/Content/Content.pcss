@@ -1,0 +1,16 @@
+@import "../../../styles/mixins.pcss";
+
+.content {
+  @mixin grid-center;
+
+  flex-grow: 1;
+  padding-block: 30px;
+
+  &__body {
+    height: 100%;
+
+    && {
+      max-width: 500px;
+    }
+  }
+}
