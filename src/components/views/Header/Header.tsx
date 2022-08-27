@@ -30,7 +30,7 @@ const Header: FC<IHeader> = (props) => {
       <Container className="header__inner">
         <Logo className="header__logo" />
         {
-          isAuth ?
+          (isAuth && email) ?
             <UserPanel className="header__user-panel" name={email} /> :
             <div className="header__actions">
               {isNotAuthURL && <Button className="header__button" href={AppRoute.auth} icon="sign-in">Sign In</Button>}

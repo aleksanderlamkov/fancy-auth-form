@@ -1,0 +1,85 @@
+@import "mixins.pcss";
+
+p,
+ul,
+ol,
+img,
+blockquote {
+  &:not([class]) {
+    --marginY: 0.5em;
+  }
+}
+
+@mixin list-items {
+  --marginY: 0.1em;
+}
+
+p,
+ul,
+ol,
+li,
+li ol,
+li ul,
+img,
+blockquote {
+  &:not([class]) {
+    &:not(:last-child) {
+      margin-bottom: var(--marginY);
+    }
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+ol:not([class]) ul,
+ul:not([class]) ul,
+ol:not([class]) {
+  margin-left: 16px;
+}
+
+ol:not([class]),
+ul:not([class]) {
+  ul,
+  ol {
+    margin-top: var(--marginY);
+  }
+}
+
+ol {
+  &:not([class]) {
+    list-style-type: decimal-leading-zero;
+
+    li {
+      padding-left: 0.25em;
+
+      &::marker {
+        color: var(--c-accent);
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+ul {
+  --markerIconSize: 3px;
+
+  &:not([class]) {
+    & > li::before {
+      content: "";
+      display: inline-flex;
+      margin-left: 0.35em;
+      margin-right: 0.75em;
+      vertical-align: middle;
+    }
+
+    li::before {
+      @mixin square var(--markerIconSize);
+
+      background-color: currentColor;
+      border-radius: 50%;
+    }
+  }
+}

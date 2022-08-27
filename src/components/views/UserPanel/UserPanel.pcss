@@ -4,13 +4,29 @@
   --imageSize: 36px;
 
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 8px;
+  width: 100%;
+
+  @media (--mobile) {
+    --imageSize: 30px;
+
+    font-size: 14px;
+  }
 
   &__name {
     @mixin text-overflow;
 
-    max-width: 220px;
+    max-width: 360px;
+
+    @media (--tablet-s) {
+      max-width: 220px;
+    }
+
+    @media (--mobile-xs) {
+      max-width: 200px;
+    }
   }
 
   &__image-wrapper {

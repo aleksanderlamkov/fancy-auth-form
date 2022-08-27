@@ -23,7 +23,7 @@ const UserPanel: FC<IUserPanel> = (props) => {
 
   const onSignOutButtonClick = () => {
     dispatch(logOutUser())
-    dispatch(addStatus({ label: "Logged out of your account" }))
+    dispatch(addStatus({ label: "Logged out of your account." }))
   }
 
   return (

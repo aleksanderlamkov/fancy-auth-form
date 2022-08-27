@@ -29,7 +29,7 @@ const RegisterForm: FC = () => {
       dispatch(addStatus({ label: "Registration is successful. Welcome!" }))
     }).catch(({ code }) => {
       if (code === AuthStatus.emailAlreadyInUse) {
-        const label = `Email '${email}' is already use! Please, use another email address`
+        const label = `Email '${email}' is already use! Please, use another email address.`
         dispatch(addStatus({ label }))
         setErrors({ email: label })
       }
