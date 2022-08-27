@@ -12,7 +12,7 @@ const HomePage: FC = () => {
         <li>TypeScript</li>
         <li>React</li>
         <li>React Router</li>
-        <li>Redux + Redux Toolkit</li>
+        <li>Redux + Redux Toolkit + Redux Persist</li>
         <li>Formik + Yup</li>
         <li>Firebase</li>
         <li>ClassNames</li>

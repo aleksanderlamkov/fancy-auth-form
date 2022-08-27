@@ -1,8 +1,9 @@
 import React, { FC } from "react"
 import classNames from "classnames"
-import Button from "../../UI/Button/Button"
 import { useAppDispatch } from "../../../hooks/redux"
 import { logOutUser } from "../../../store/slices/userSliсe"
+import { addStatus } from "../../../store/slices/statusesSlice"
+import Button from "../../UI/Button/Button"
 import "./UserPanel.pcss"
 
 interface IUserPanel {
@@ -22,6 +23,7 @@ const UserPanel: FC<IUserPanel> = (props) => {
 
   const onSignOutButtonClick = () => {
     dispatch(logOutUser())
+    dispatch(addStatus({ label: "Logged out of your account" }))
   }
 
   return (
