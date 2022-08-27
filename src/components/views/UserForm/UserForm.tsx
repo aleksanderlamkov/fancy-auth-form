@@ -1,9 +1,8 @@
-import React, { ReactNode } from "react"
+import React, { FC, ReactNode } from "react"
 import { useUserForm } from "../../../hooks/useUserForm"
 import { useFormik } from "formik"
 import { FormikHelpers } from "formik/dist/types"
 import { EmailType } from "../../../types/const"
-import * as Yup from "yup"
 import classNames from "classnames"
 import Grid from "../../UI/Grid/Grid"
 import GridItem from "../../UI/Grid/GridItem"
@@ -24,7 +23,7 @@ interface IUserForm {
   isLoading?: boolean
 }
 
-const UserForm = (props: IUserForm) => {
+const UserForm: FC<IUserForm> = (props) => {
   const {
     className,
     onAfterSubmit,
@@ -114,7 +113,7 @@ const UserForm = (props: IUserForm) => {
           {Boolean(notice) && <div className="user-form__notice">{notice}</div>}
         </GridItem>
       </Grid>
-      <Loader isShown={isLoading}/>
+      <Loader isShown={isLoading} />
     </form>
   )
 }

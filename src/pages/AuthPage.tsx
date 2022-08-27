@@ -6,7 +6,7 @@ const AuthPage = () => {
   return (
     <>
       <PageTitle>Sign In</PageTitle>
-      <AuthForm/>
+      <AuthForm />
     </>
   )
 }

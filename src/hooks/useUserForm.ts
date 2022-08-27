@@ -24,11 +24,11 @@ export const useUserForm = (hasPasswordConfirm: boolean = false) => {
           .matches(/\d+/, "Must contain at least one number"),
         passwordConfirm: Yup.string()
           .required("Required field")
-          .oneOf([Yup.ref("password")], "Password must be the same"),
+          .oneOf([ Yup.ref("password") ], "Password must be the same"),
       } : {
         email: emailValidationSchema,
-        password: Yup.string().required("Required field")
-      }
-    )
+        password: Yup.string().required("Required field"),
+      },
+    ),
   }
 }

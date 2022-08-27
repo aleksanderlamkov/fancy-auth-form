@@ -19,9 +19,3 @@ export enum AppStateClasses {
 export type EmailType = string
 
 export type TokenType = string
-
-export type FirebaseAuthType = {
-  email: string,
-  accessToken: string,
-  uid: string,
-}

@@ -1,8 +1,8 @@
-import React from "react"
+import React, { FC } from "react"
 import PageTitle from "../components/UI/PageTitle/PageTitle"
 import RegisterForm from "../components/views/RegisterForm/RegisterForm"
 
-const HomePage = () => {
+const HomePage: FC = () => {
   return (
     <>
       <PageTitle>Home page</PageTitle>

@@ -1,10 +1,10 @@
-import React, { AnimationEvent } from "react"
+import React, { AnimationEvent, FC } from "react"
 import classNames from "classnames"
 import { getStatuses } from "../../../store/slices/statusesSlice"
 import { useAppSelector } from "../../../hooks/redux"
 import "./StatusBar.pcss"
 
-const StatusBar = () => {
+const StatusBar: FC = () => {
   const items = useAppSelector(getStatuses)
 
   if (!items.length) return null

@@ -21,7 +21,7 @@ const App = (): JSX.Element => {
               index
               element={(
                 <PrivateRoute>
-                  <HomePage/>
+                  <HomePage />
                 </PrivateRoute>
               )}
             />

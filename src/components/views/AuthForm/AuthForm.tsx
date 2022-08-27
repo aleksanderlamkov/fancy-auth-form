@@ -1,15 +1,15 @@
-  import React, { FC, useState } from "react"
-  import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
-  import { Link, useNavigate } from "react-router-dom"
-  import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-  import { addStatus } from "../../../store/slices/statusesSlice"
-  import { useAppDispatch } from "../../../hooks/redux"
-  import { FormikHelpers } from "formik/dist/types"
-  import { setUser } from "../../../store/slices/userSliсe"
-  import UserForm from "../UserForm/UserForm"
-  import firebase from "firebase/compat"
-  import OAuthCredential = firebase.auth.OAuthCredential
-  import UserCredential = firebase.auth.UserCredential
+import React, { FC, useState } from "react"
+import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
+import { Link, useNavigate } from "react-router-dom"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { addStatus } from "../../../store/slices/statusesSlice"
+import { useAppDispatch } from "../../../hooks/redux"
+import { FormikHelpers } from "formik/dist/types"
+import { setUser } from "../../../store/slices/userSliсe"
+import UserForm from "../UserForm/UserForm"
+import firebase from "firebase/compat"
+import OAuthCredential = firebase.auth.OAuthCredential
+import UserCredential = firebase.auth.UserCredential
 
 const AuthForm: FC = () => {
   const [ isLoading, setIsLoading ] = useState<boolean>(false)

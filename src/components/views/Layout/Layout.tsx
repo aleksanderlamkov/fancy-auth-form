@@ -1,11 +1,11 @@
-import React from "react"
+import React, { FC } from "react"
 import { Outlet } from "react-router-dom"
 import Content from "../Content/Content"
 import Header from "../Header/Header"
 import Footer from "../Footer/Footer"
 import StatusBar from "../../UI/StatusBar/StatusBar"
 
-const Layout = () => {
+const Layout: FC = () => {
   return (
     <>
       <Header />
@@ -13,7 +13,7 @@ const Layout = () => {
         <Outlet />
       </Content>
       <Footer />
-      <StatusBar/>
+      <StatusBar />
     </>
   )
 }

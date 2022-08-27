@@ -18,7 +18,7 @@ const Grid: FC<IGrid> = (props) => {
   return (
     <div
       className={classNames(className, "grid", {
-        [`grid--${columns}`]: columns > 1
+        [`grid--${columns}`]: columns > 1,
       })}
     >
       {children}

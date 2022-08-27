@@ -6,7 +6,7 @@ const RegisterPage = () => {
   return (
     <>
       <PageTitle>Sign Up</PageTitle>
-      <RegisterForm/>
+      <RegisterForm />
     </>
   )
 }

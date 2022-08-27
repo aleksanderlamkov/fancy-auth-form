@@ -28,10 +28,10 @@ const Header: FC<IHeader> = (props) => {
       className={classNames(className, "header")}
     >
       <Container className="header__inner">
-        <Logo className="header__logo"/>
+        <Logo className="header__logo" />
         {
           isAuth ?
-            <UserPanel className="header__user-panel" name={email}/> :
+            <UserPanel className="header__user-panel" name={email} /> :
             <div className="header__actions">
               {isNotAuthURL && <Button className="header__button" href={AppRoute.auth} icon="sign-in">Sign In</Button>}
               {isNotRegisterURL && <Button className="header__button" href={AppRoute.register} icon="sign-up">Sign Up</Button>}

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC, useState } from "react"
 import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
 import { Link, useNavigate } from "react-router-dom"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
@@ -10,7 +10,8 @@ import UserForm from "../UserForm/UserForm"
 import firebase from "firebase/compat"
 import OAuthCredential = firebase.auth.OAuthCredential
 
-const RegisterForm = () => {
+const RegisterForm: FC = () => {
+  const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -18,6 +19,7 @@ const RegisterForm = () => {
     const { setErrors } = formikHelpers
     const auth = getAuth()
 
+    setIsLoading(true)
     createUserWithEmailAndPassword(auth, email, password).then((response) => {
       const { user } = response
       const { email, uid: id } = user
@@ -31,7 +33,7 @@ const RegisterForm = () => {
         dispatch(addStatus({ label }))
         setErrors({ email: label })
       }
-    })
+    }).finally(() => setIsLoading(false))
   }
 
   return (
