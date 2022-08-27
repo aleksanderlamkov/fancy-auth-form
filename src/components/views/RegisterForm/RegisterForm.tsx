@@ -7,8 +7,6 @@ import { useAppDispatch } from "../../../hooks/redux"
 import { FormikHelpers } from "formik/dist/types"
 import { setUser } from "../../../store/slices/userSliсe"
 import UserForm from "../UserForm/UserForm"
-import firebase from "firebase/compat"
-import OAuthCredential = firebase.auth.OAuthCredential
 
 const RegisterForm: FC = () => {
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
@@ -23,7 +21,8 @@ const RegisterForm: FC = () => {
     createUserWithEmailAndPassword(auth, email, password).then((response) => {
       const { user } = response
       const { email, uid: id } = user
-      const { accessToken: token = null } = user as unknown as OAuthCredential
+      // @ts-ignore
+      const { accessToken: token = null } = user
       dispatch(setUser({ email, token, id }))
       navigate(AppRoute.index, { replace: true })
       dispatch(addStatus({ label: "Registration is successful. Welcome!" }))
