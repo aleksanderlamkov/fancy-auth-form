@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
 
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path={AppRoute.index} element={<Layout />}>
             <Route
