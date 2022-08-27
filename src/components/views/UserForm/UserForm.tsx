@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react"
+import { useUserForm } from "../../../hooks/useUserForm"
 import { useFormik } from "formik"
 import { FormikHelpers } from "formik/dist/types"
 import { EmailType } from "../../../types/const"
@@ -9,6 +10,7 @@ import GridItem from "../../UI/Grid/GridItem"
 import FormItem from "../../UI/FormItem/FormItem"
 import Input from "../../UI/Input/Input"
 import Button from "../../UI/Button/Button"
+import Loader from "../../UI/Loader/Loader"
 import "./UserForm.pcss"
 
 interface IUserForm {
@@ -18,6 +20,8 @@ interface IUserForm {
   submitButtonIcon: string
   notice?: ReactNode
   hasPasswordAutoComplete?: boolean
+  hasPasswordConfirmField?: boolean
+  isLoading?: boolean
 }
 
 const UserForm = (props: IUserForm) => {
@@ -28,7 +32,11 @@ const UserForm = (props: IUserForm) => {
     submitButtonIcon,
     notice = null,
     hasPasswordAutoComplete = false,
+    hasPasswordConfirmField = false,
+    isLoading = false,
   } = props
+
+  const { initialValues, validationSchema } = useUserForm(hasPasswordConfirmField)
 
   const {
     handleSubmit,
@@ -42,19 +50,8 @@ const UserForm = (props: IUserForm) => {
       const { email, password } = values
       onAfterSubmit(email, password, formikHelpers)
     },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .required("Required field")
-        .email("Invalid email address"),
-      password: Yup.string()
-        .required("Required field")
-        .min(8, "Your password cannot be less than 8 characters")
-        .max(20, "Your password cannot be longer than 20 characters"),
-    }),
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    validationSchema,
+    initialValues,
   })
 
   return (
@@ -93,17 +90,31 @@ const UserForm = (props: IUserForm) => {
             />
           </FormItem>
         </GridItem>
+        {hasPasswordConfirmField && (
+          <GridItem>
+            <FormItem>
+              <Input
+                id="passwordConfirm"
+                name="passwordConfirm"
+                type="password"
+                value={values.passwordConfirm || ""}
+                error={touched.passwordConfirm ? errors.passwordConfirm : ""}
+                label="Confirm password"
+                placeholder="Repeat your password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </FormItem>
+          </GridItem>
+        )}
         <GridItem>
           <Button className="user-form__submit-button" type="submit" icon={submitButtonIcon}>
             {submitButtonLabel}
           </Button>
-          {Boolean(notice) && (
-            <div className="user-form__notice">
-              {notice}
-            </div>
-          )}
+          {Boolean(notice) && <div className="user-form__notice">{notice}</div>}
         </GridItem>
       </Grid>
+      <Loader isShown={isLoading}/>
     </form>
   )
 }

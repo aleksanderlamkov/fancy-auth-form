@@ -21,7 +21,7 @@ const RegisterForm = () => {
     createUserWithEmailAndPassword(auth, email, password).then((response) => {
       const { user } = response
       const { email, uid: id } = user
-      const { accessToken: token = "" } = user as unknown as OAuthCredential
+      const { accessToken: token = null } = user as unknown as OAuthCredential
       dispatch(setUser({ email, token, id }))
       navigate(AppRoute.index, { replace: true })
       dispatch(addStatus({ label: "Registration is successful. Welcome!" }))
@@ -40,6 +40,7 @@ const RegisterForm = () => {
       submitButtonLabel="Sign Up"
       submitButtonIcon="sign-up"
       notice={<>Already have an account? <Link to={AppRoute.auth}>Sign In</Link></>}
+      hasPasswordConfirmField
     />
   )
 }
