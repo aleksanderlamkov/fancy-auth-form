@@ -18,9 +18,9 @@ const Page: FC<IPage> = (props) => {
   } = props
   const { isAuth } = useAuth()
 
-  if (hasRedirectToHomeIfAuth && isAuth) return <Navigate to={AppRoute.index} />
-
   useDocumentTitle(title)
+
+  if (hasRedirectToHomeIfAuth && isAuth) return <Navigate to={AppRoute.index} />
 
   return (
     <>
