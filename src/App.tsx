@@ -6,6 +6,8 @@ import PrivateRoute from "./components/views/PrivateRoute/PrivateRoute"
 import HomePage from "./pages/HomePage"
 import RegisterPage from "./pages/RegisterPage"
 import AuthPage from "./pages/AuthPage"
+import ErrorPage from "./pages/ErrorPage"
+import Page from "./components/views/Page/Page"
 
 const App = (): JSX.Element => {
   useEffect(() => {
@@ -21,12 +23,36 @@ const App = (): JSX.Element => {
               index
               element={(
                 <PrivateRoute>
-                  <HomePage />
+                  <Page>
+                    <HomePage/>
+                  </Page>
                 </PrivateRoute>
               )}
             />
-            <Route path={AppRoute.auth} element={<AuthPage />} />
-            <Route path={AppRoute.register} element={<RegisterPage />} />
+            <Route
+              path={AppRoute.auth}
+              element={(
+                <Page title="Fancy Auth Form: Sign In" hasRedirectToHomeIfAuth>
+                  <AuthPage />
+                </Page>
+              )}
+            />
+            <Route
+              path={AppRoute.register}
+              element={(
+                <Page title="Fancy Auth Form: Sign Up" hasRedirectToHomeIfAuth>
+                  <RegisterPage />
+                </Page>
+              )}
+            />
+            <Route
+              path={AppRoute.error404}
+              element={(
+                <Page title="Fancy Auth Form: Page Not Found">
+                  <ErrorPage />
+                </Page>
+              )}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
