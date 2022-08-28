@@ -18,18 +18,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<IUser>) {
-      return {
-        ...state,
-        ...action.payload,
-      }
+      return action.payload
     },
     logOutUser(state) {
-      return {
-        ...state,
-        email: null,
-        token: null,
-        id: null,
-      }
+      return initialState
     },
   },
 })
