@@ -18,6 +18,7 @@ const HomePage: FC = () => {
         <li><a href="https://github.com/JedWatson/classnames" target="_blank" title="Go to an external website">ClassNames</a></li>
         <li>A few favorite must-have <a href="https://postcss.org/" target="_blank" title="Go to an external website">PostCSS</a> plugins</li>
         <li>A small <a href="https://github.com/vbenjs/vite-plugin-svg-icons" target="_blank" title="Go to an external website">plugin</a> for SVG icons</li>
+        <li><a href="https://vitest.dev/" target="_blank" title="Go to an external website">Vitest</a> for unit tests</li>
       </ul>
     </>
   )
