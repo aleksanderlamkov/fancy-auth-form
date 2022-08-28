@@ -12,3 +12,4 @@
 - classNames
 - PostCSS
 - vite-plugin-svg-icons
+- Vitest for unit tests
