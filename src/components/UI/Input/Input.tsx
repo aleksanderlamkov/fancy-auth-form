@@ -14,6 +14,8 @@ interface IInput {
   label?: string
   placeholder?: string
   autoComplete?: string
+  isDisabled?: boolean
+  isReadOnly?: boolean
   inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
   style?: {}
   onChange: (event: ChangeEvent<any>) => void
@@ -31,6 +33,8 @@ const Input = (props: IInput, ref: Ref<HTMLInputElement>): JSX.Element => {
     label = "",
     placeholder = "",
     autoComplete = "off",
+    isDisabled = false,
+    isReadOnly = false,
     inputMode = undefined,
     style = {},
     onChange,
@@ -47,6 +51,7 @@ const Input = (props: IInput, ref: Ref<HTMLInputElement>): JSX.Element => {
         className={classNames(className, "input", {
           "is-invalid": hasError,
         })}
+        ref={ref}
         id={name}
         name={name}
         type={type}
@@ -54,7 +59,8 @@ const Input = (props: IInput, ref: Ref<HTMLInputElement>): JSX.Element => {
         placeholder={placeholder}
         autoComplete={autoComplete}
         inputMode={inputMode}
-        ref={ref}
+        disabled={isDisabled}
+        readOnly={isReadOnly}
         style={style}
         onChange={onChange}
         onBlur={onBlur}

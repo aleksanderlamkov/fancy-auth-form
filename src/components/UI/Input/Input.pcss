@@ -20,9 +20,15 @@
   --hoverBorderColor: var(--c-accent);
   --hoverDropShadow: var(--box-shadow-2);
 
-  --invalidDropShadow: 0 0 4px var(--c-red);
+  --disabledTextColor: var(--c-dark);
+  --disabledPlaceholderColor: var(--c-gray);
+  --disabledBgColor: var(--c-gray-2);
+  --disabledBorderColor: var(--c-gray-2);
+  --disabledDropShadow: 0 0 0 transparent;
 
   --focusBorderColor: var(--c-accent-2);
+
+  --invalidDropShadow: 0 0 4px var(--c-red);
 
   display: inline-flex;
   align-items: center;
@@ -55,6 +61,22 @@
 
   &:focus {
     border-color: var(--focusBorderColor);
+  }
+
+  &[disabled],
+  &[readonly] {
+    color: var(--disabledTextColor);
+    background-color: var(--disabledBgColor);
+    border-color: var(--disabledBorderColor);
+    filter: drop-shadow(var(--disabledDropShadow));
+
+    &::placeholder {
+      color: var(--disabledPlaceholderColor);
+    }
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
   }
 
   &.is-invalid {
