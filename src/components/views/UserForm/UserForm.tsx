@@ -1,8 +1,13 @@
-import React, { FC, ReactNode } from "react"
+import React, { FC, ReactNode, useState } from "react"
 import { useUserForm } from "../../../hooks/useUserForm"
 import { useFormik } from "formik"
-import { FormikHelpers } from "formik/dist/types"
-import { EmailType } from "../../../types/const"
+import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
+import { UserCredential, Auth } from "@firebase/auth"
+import { getAuth } from "firebase/auth"
+import { setUser } from "../../../store/slices/userSliсe"
+import { addStatus } from "../../../store/slices/statusesSlice"
+import { useAppDispatch } from "../../../hooks/redux"
+import { useNavigate } from "react-router-dom"
 import classNames from "classnames"
 import Grid from "../../UI/Grid/Grid"
 import GridItem from "../../UI/Grid/GridItem"
@@ -14,28 +19,31 @@ import "./UserForm.pcss"
 
 interface IUserForm {
   className?: string
-  onAfterSubmit: (email: EmailType, password: string, formikHelpers: FormikHelpers<any>) => void | Promise<any>
+  fetchFirebase: (auth: Auth, email: EmailType, password: string) => Promise<UserCredential>,
+  fetchFirebaseSuccessStatus: string,
   submitButtonLabel: string
   submitButtonIcon: string
   notice?: ReactNode
   hasPasswordAutoComplete?: boolean
   hasPasswordConfirmField?: boolean
-  isLoading?: boolean
 }
 
 const UserForm: FC<IUserForm> = (props) => {
   const {
     className,
-    onAfterSubmit,
+    fetchFirebase,
+    fetchFirebaseSuccessStatus,
     submitButtonLabel,
     submitButtonIcon,
     notice = null,
     hasPasswordAutoComplete = false,
     hasPasswordConfirmField = false,
-    isLoading = false,
   } = props
 
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { initialValues, validationSchema } = useUserForm(hasPasswordConfirmField)
+  const [ isLoading, setIsLoading ] = useState<boolean>(false)
 
   const {
     handleSubmit,
@@ -47,7 +55,51 @@ const UserForm: FC<IUserForm> = (props) => {
   } = useFormik({
     onSubmit(values, formikHelpers) {
       const { email, password } = values
-      onAfterSubmit(email, password, formikHelpers)
+      const { setErrors } = formikHelpers
+      const auth = getAuth()
+
+      setIsLoading(true)
+      fetchFirebase(auth, email, password).then((response) => {
+        const { user } = response
+        const { email, uid: id } = user
+        // @ts-ignore
+        const { accessToken: token = null } = user
+
+        dispatch(setUser({ email, token, id }))
+        dispatch(addStatus({ label: fetchFirebaseSuccessStatus }))
+        navigate(AppRoute.index, { replace: true })
+      }).catch(({ code }) => {
+        let label = ""
+
+        switch (code) {
+          case (AuthStatus.emailAlreadyInUse): {
+            label = `Email '${email}' is already use! Please, use another email address.`
+            setErrors({ email: label })
+            break
+          }
+          case (AuthStatus.wrongPassword): {
+            label = "Password is wrong!"
+            setErrors({ password: label })
+            break
+          }
+          case (AuthStatus.userNotFound): {
+            label = `User with email '${email}' is not found!`
+            setErrors({ email: label })
+            break
+          }
+          case (AuthStatus.tooManyRequests): {
+            label = "Too many attempts. Please, try again a bit later!"
+            break
+          }
+          default: {
+            break
+          }
+        }
+
+        if (label) {
+          dispatch(addStatus({ label }))
+        }
+      }).finally(() => setIsLoading(false))
     },
     validationSchema,
     initialValues,
