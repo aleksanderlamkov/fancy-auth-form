@@ -17,7 +17,7 @@ const Error404: FC<IError404> = (props) => {
     <div
       className={classNames(className, "error404")}
     >
-      <p>Oooops! Page is not found :(</p>
+      <p>Oooops! Page not found :(</p>
       <Button href={AppRoute.index}>Go to home page</Button>
     </div>
   )
