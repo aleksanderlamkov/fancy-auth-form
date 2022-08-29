@@ -15,6 +15,16 @@ export default defineConfig({
       iconDirs: [ path.resolve(process.cwd(), "public/icons") ],
       symbolId: "icon-[dir]-[name]",
       customDomId: "svg-sprite",
+      svgoOptions: {
+        plugins: [
+          {
+            name: "convertColors",
+            params: {
+              currentColor: true
+            }
+          }
+        ]
+      }
     }),
   ],
   css: {
