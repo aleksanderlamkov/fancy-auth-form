@@ -76,7 +76,7 @@ const Button: FC<IButton> = (props) => {
     } = event.nativeEvent
 
     materializeEffect({
-      x: offsetX || (target as HTMLElement).offsetLeft / 2,
+      x: offsetX || (target as HTMLElement).offsetWidth / 2,
       y: offsetY || (target as HTMLElement).offsetHeight / 2,
     })
     onClick?.(event)
