@@ -17,6 +17,9 @@ export default defineConfig({
       customDomId: "svg-sprite",
     }),
   ],
+  build: {
+    target: "esnext",
+  },
   css: {
     devSourcemap: true,
   },
@@ -24,8 +27,6 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
-    // you might want to disable it, if you don't have tests that rely on CSS
-    // since parsing CSS is slow
     css: true,
   },
 })
