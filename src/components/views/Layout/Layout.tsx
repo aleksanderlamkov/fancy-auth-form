@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom"
 import Content from "../Content/Content"
 import Header from "../Header/Header"
 import Footer from "../Footer/Footer"
-import StatusBar from "../../UI/StatusBar/StatusBar"
+import StatusBar from "../StatusBar/StatusBar"
 
 const Layout: FC = () => {
   return (
