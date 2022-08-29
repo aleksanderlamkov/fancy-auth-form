@@ -36,6 +36,12 @@
   --activeDropShadow: 0 0 0 transparent;
   --activeIconColor: var(--c-light);
 
+  --disabledTextColor: var(--c-dark);
+  --disabledBgColor: var(--c-gray-2);
+  --disabledBorderColor: var(--c-gray-2);
+  --disabledDropShadow: 0 0 0 transparent;
+  --disabledIconColor: var(--c-dark);
+
   --activeRippleColor: var(--c-accent);
 
   --rippleAnimation: ripple 0.8s ease-in;
@@ -105,15 +111,29 @@
   }
 
   &:active {
-    @mixin scale;
-
     color: var(--activeTextColor);
     background-color: var(--activeBgColor);
     border-color: var(--activeBorderColor);
     filter: drop-shadow(var(--activeDropShadow));
 
+    &:not([disabled]) {
+      @mixin scale;
+    }
+
     .button__icon {
       --color: var(--activeIconColor);
+    }
+  }
+
+  &[disabled] {
+    color: var(--disabledTextColor);
+    background-color: var(--disabledBgColor);
+    border-color: var(--disabledBorderColor);
+    filter: drop-shadow(var(--disabledDropShadow));
+    cursor: not-allowed;
+
+    .button__icon {
+      --color: var(--disabledIconColor);
     }
   }
 

@@ -9,13 +9,14 @@ type ButtonClickEvent = MouseEvent<HTMLButtonElement | HTMLAnchorElement>
 
 interface IButton {
   className?: string
+  children?: ReactNode
   type?: "button" | "submit" | "reset"
   href?: string
   title?: string
   ariaLabel?: string
+  isDisabled?: boolean
   icon?: string
   iconPosition?: "before" | "after"
-  children?: ReactNode
   onClick?: (event: ButtonClickEvent) => void
 }
 
@@ -27,13 +28,14 @@ interface Coordinates {
 const Button: FC<IButton> = (props) => {
   const {
     className,
+    children,
     type = "button",
     href = "",
     title,
     ariaLabel,
+    isDisabled = false,
     icon,
     iconPosition = "after",
-    children,
     onClick,
   } = props
 
@@ -101,7 +103,7 @@ const Button: FC<IButton> = (props) => {
 
   return isLink ?
     <Link {...args} to={href}>{bodyMarkup}</Link> :
-    <button {...args} type={type}>{bodyMarkup}</button>
+    <button {...args} type={type} disabled={isDisabled}>{bodyMarkup}</button>
 }
 
 export default Button
