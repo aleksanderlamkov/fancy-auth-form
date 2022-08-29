@@ -1,9 +1,8 @@
-import React, { FC, lazy } from "react"
+import React, { FC } from "react"
 import { AppRoute } from "../../../types/const"
 import { Link } from "react-router-dom"
-import UserForm from "../UserForm/UserForm"
-
-const { signInWithEmailAndPassword } = await import("firebase/auth")
+import { signInWithEmailAndPassword } from "firebase/auth"
+import UserForm  from "../UserForm/UserForm"
 
 const AuthForm: FC = () => {
   return (

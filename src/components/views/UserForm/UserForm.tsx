@@ -1,7 +1,9 @@
 import React, { FC, ReactNode, useState } from "react"
 import { useUserForm } from "../../../hooks/useUserForm"
+import { useFormik } from "formik"
 import { AppRoute, AuthStatus, EmailType } from "../../../types/const"
 import { UserCredential, Auth } from "@firebase/auth"
+import { getAuth } from "firebase/auth"
 import { setUser } from "../../../store/slices/userSliсe"
 import { addStatus } from "../../../store/slices/statusesSlice"
 import { useAppDispatch } from "../../../hooks/redux"
@@ -14,9 +16,6 @@ import Input from "../../UI/Input/Input"
 import Button from "../../UI/Button/Button"
 import Loader from "../../UI/Loader/Loader"
 import "./UserForm.pcss"
-
-const { getAuth } = await import("firebase/auth")
-const { useFormik } = await import("formik")
 
 interface IUserForm {
   className?: string

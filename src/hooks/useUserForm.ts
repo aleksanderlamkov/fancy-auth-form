@@ -1,4 +1,4 @@
-const Yup = await import("yup")
+import * as Yup from "yup"
 
 export const emailValidationSchema = Yup.string().required("Required field").email("Invalid email address")
 
