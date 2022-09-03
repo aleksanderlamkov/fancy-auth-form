@@ -1,13 +1,14 @@
 @import "../../../styles/mixins.pcss";
 
 .header {
+  box-shadow: var(--box-shadow-3);
+
   &__inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
     column-gap: 20px;
     padding-block: 12px;
-    box-shadow: var(--box-shadow-3);
 
     @media (--mobile) {
       column-gap: 16px;
