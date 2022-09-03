@@ -19,8 +19,9 @@ export const useUserForm = (hasPasswordConfirm: boolean = false) => {
           .required("Required field")
           .min(8, "Cannot be less than 8 characters")
           .max(32, "Cannot be more than 32 characters")
-          .matches(/[a-zа-яё]+/, "Must contain at least one lowercase character")
-          .matches(/[A-ZА-ЯЁ]+/, "Must contain at least one uppercase character")
+          .matches(/^[A-Za-z]+$/, "Only english letters")
+          .matches(/[a-z]+/, "Must contain at least one lowercase character")
+          .matches(/[A-Z]+/, "Must contain at least one uppercase character")
           .matches(/\d+/, "Must contain at least one number"),
         passwordConfirm: Yup.string()
           .required("Required field")
