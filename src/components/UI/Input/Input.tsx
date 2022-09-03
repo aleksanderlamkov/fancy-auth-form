@@ -1,8 +1,9 @@
-import React, { ChangeEvent, FocusEvent, forwardRef, Ref } from "react"
+import React, { ChangeEvent, FocusEvent, forwardRef, Ref, useState } from "react"
 import classNames from "classnames"
 import Label from "../Label/Label"
 import FormError from "../FormError/FormError"
 import "./Input.pcss"
+import Button from "../Button/Button"
 
 interface IInput {
   className?: string
@@ -41,30 +42,51 @@ const Input = (props: IInput, ref: Ref<HTMLInputElement>): JSX.Element => {
     onBlur,
   } = props
 
+  const [ isPasswordShown, setIsPasswordShown ] = useState(false)
   const hasLabel = Boolean(label)
   const hasError = Boolean(error)
+  const isPassword = type === "password"
+
+  const onTogglePasswordVisibilityButtonClick = () => {
+    setIsPasswordShown(!isPasswordShown)
+  }
+
+  let typeFormatted = type
+  if (isPassword && isPasswordShown) {
+    typeFormatted = "text"
+  }
 
   return (
     <>
       {hasLabel && <Label htmlFor={id}>{label}</Label>}
-      <input
-        className={classNames(className, "input", {
-          "is-invalid": hasError,
-        })}
-        ref={ref}
-        id={name}
-        name={name}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        inputMode={inputMode}
-        disabled={isDisabled}
-        readOnly={isReadOnly}
-        style={style}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
+      <div className="input-wrapper">
+        {isPassword && (
+          <Button
+            className="input-wrapper__button"
+            icon={isPasswordShown ? "eye-open" : "eye-closed"}
+            isTransparent
+            onClick={onTogglePasswordVisibilityButtonClick}
+          />
+        )}
+        <input
+          className={classNames(className, "input", {
+            "is-invalid": hasError,
+          })}
+          ref={ref}
+          id={name}
+          name={name}
+          type={typeFormatted}
+          value={value}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          inputMode={inputMode}
+          disabled={isDisabled}
+          readOnly={isReadOnly}
+          style={style}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      </div>
       {hasError && <FormError>{error}</FormError>}
     </>
   )

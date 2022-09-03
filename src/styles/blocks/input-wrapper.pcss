@@ -1,0 +1,18 @@
+@import "../mixins.pcss";
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+
+  &__button {
+    position: absolute;
+    z-index: var(--layer-tooltip);
+    bottom: 0;
+    right: calc(var(--input-padding-x) / 2);
+    width: var(--input-button-width);
+
+    & ~ .input {
+      padding-right: calc(var(--input-padding-x) / 2 + var(--input-button-width));
+    }
+  }
+}

@@ -1,6 +1,7 @@
 @import "../../../styles/mixins.pcss";
 
 .button {
+  --width: 100%;
   --maxWidth: 300px;
   --height: var(--input-height);
   --paddingX: 16px;
@@ -53,7 +54,7 @@
 
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: var(--width);
   max-width: var(--maxWidth);
   height: var(--height);
   padding-inline: var(--paddingX);
@@ -135,6 +136,33 @@
     .button__icon {
       --color: var(--disabledIconColor);
     }
+  }
+
+  &--only-icon {
+    --width: auto;
+    --paddingX: 0;
+  }
+
+  &--transparent {
+    --textColor: var(--c-dark);
+    --bgColor: transparent;
+    --borderWidth: 0;
+
+    --iconSize: 1.35em;
+    --iconColor: var(--c-dark);
+
+    --hoverTextColor: var(--c-accent);
+    --hoverBgColor: transparent;
+    --hoverDropShadow: 0 0 0 transparent;
+    --hoverIconColor: var(--c-accent);
+
+    --focusTextColor: var(--c-dark);
+    --focusBgColor: transparent;
+    --focusIconColor: var(--c-dark);
+
+    --activeTextColor: var(--c-accent);
+    --activeBgColor: transparent;
+    --activeIconColor: var(--c-accent);
   }
 
   &__body {

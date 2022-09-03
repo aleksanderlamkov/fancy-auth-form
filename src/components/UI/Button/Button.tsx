@@ -17,6 +17,7 @@ interface IButton {
   isDisabled?: boolean
   icon?: string
   iconPosition?: "before" | "after"
+  isTransparent?: boolean
   onClick?: (event: ButtonClickEvent) => void
 }
 
@@ -36,6 +37,7 @@ const Button: FC<IButton> = (props) => {
     isDisabled = false,
     icon,
     iconPosition = "after",
+    isTransparent = false,
     onClick,
   } = props
 
@@ -88,8 +90,10 @@ const Button: FC<IButton> = (props) => {
 
   const args = {
     className: classNames(className, "button", {
-      "is-ripple": isRipple,
+      "is-ripple": isRipple && children,
       "is-animation-end": isAnimationEnd,
+      "button--only-icon": !children,
+      "button--transparent": isTransparent,
     }),
     style: {
       "--rippleOffsetX": `${rippleOffset.x}px`,
